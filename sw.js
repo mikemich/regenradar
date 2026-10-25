@@ -1,4 +1,4 @@
-const C='regenradar-v1',A=['./','index.html','style.css','app.js','icon.svg'];
+const C='regenradar-v4',A=['./','index.html','style.css','app.js','icon.svg','apple-touch-icon.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(A)));self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(clients.claim()));
 self.addEventListener('fetch',e=>{

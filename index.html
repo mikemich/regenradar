@@ -2,46 +2,70 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>RegenRadar</title>
-<meta name="theme-color" content="#0b5fff">
+<meta name="theme-color" content="#1c3d6e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RegenRadar">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="style.css">
 </head>
-<body>
-<header>
-  <h1>🌧️ RegenRadar</h1>
-  <form id="search"><input id="q" placeholder="Search city…" autocomplete="off"><button>Go</button><button type="button" id="locate" title="Use my location">📍</button></form>
-</header>
+<body class="clear-day">
+<div class="bar">
+  <button id="cityBtn" class="pill"><span id="place">—</span></button>
+  <button id="bellBtn" class="pill round" aria-label="Notifications">🔔</button>
+</div>
 <main>
-  <section class="card hero">
-    <div id="place" class="muted"></div>
+  <section class="hero">
+    <div id="temp">--°</div>
+    <div id="cond" class="soft"></div>
     <div id="summary">Loading…</div>
-    <div id="now" class="muted"></div>
   </section>
+
   <section class="card">
-    <h2>Rain next 2 hours <span class="muted">(mm/h)</span></h2>
+    <div class="label">Next 2 hours</div>
     <div id="bars" class="bars"></div>
     <div id="barlabels" class="barlabels"></div>
   </section>
-  <section class="card">
-    <h2>Radar</h2>
-    <div id="map"></div>
-    <div class="controls"><button id="play">⏸</button><input id="slider" type="range" min="0" value="0"><span id="ts" class="muted"></span></div>
+
+  <section class="card flush">
+    <div class="label pad">Radar</div>
+    <div class="mapwrap"><div id="map"></div><button id="play" class="pill round">⏸</button><span id="ts" class="pill tag"></span></div>
+    <input id="slider" type="range" min="0" value="0">
   </section>
-  <section class="card"><h2>Next 24 hours</h2><div id="hourly" class="strip"></div></section>
-  <section class="card"><h2>7 days</h2><div id="daily"></div></section>
+
   <section class="card">
-    <h2>Notifications</h2>
-    <label><input type="checkbox" id="notifOn"> Alert me before rain starts</label>
-    <label>Min. intensity <select id="thr"><option value="0.1">Drizzle (0.1)</option><option value="0.5" selected>Light (0.5)</option><option value="2.5">Moderate (2.5)</option></select> mm/h</label>
-    <label>Lead time <select id="lead"><option>10</option><option selected>20</option><option>30</option><option>45</option></select> min</label>
-    <p class="muted small">Alerts fire while the app is open or running in the background. For always-on alerts, use the free ntfy setup in the README.</p>
+    <div class="label">Today</div>
+    <div id="hourly" class="strip"></div>
   </section>
-  <footer class="muted small">Data: <a href="https://open-meteo.com">Open-Meteo</a> · <a href="https://www.rainviewer.com">RainViewer</a> · © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · MIT licensed</footer>
+
+  <section class="card">
+    <div class="label">7 days</div>
+    <div id="daily"></div>
+  </section>
+
+  <footer>Open-Meteo · RainViewer · OpenStreetMap</footer>
 </main>
+
+<div id="scrim"></div>
+<div id="citySheet" class="sheet">
+  <div class="grab"></div>
+  <form id="search"><input id="q" placeholder="Search city" autocomplete="off"></form>
+  <button id="locate" class="row">📍 Use my location</button>
+</div>
+<div id="bellSheet" class="sheet">
+  <div class="grab"></div>
+  <h3>Rain alerts</h3>
+  <label class="row">Notify me before rain <input type="checkbox" id="notifOn" class="switch"></label>
+  <label class="row">Intensity <select id="thr"><option value="0.1">Drizzle</option><option value="0.5">Light</option><option value="2.5">Moderate</option></select></label>
+  <label class="row">Lead time <select id="lead"><option value="10">10 min</option><option value="20">20 min</option><option value="30">30 min</option><option value="45">45 min</option></select></label>
+  <p class="soft small">Alerts work while the app is open or in the background.</p>
+</div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="app.js"></script>
 </body>
